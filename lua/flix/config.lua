@@ -1,11 +1,36 @@
 local M = {}
 
+---@class flix.TerminalOptions
+---@field window "float"|"split" how the terminal is opened
+---@field width number integer = columns; float in (0,1) = fraction of editor width
+---@field height number integer = rows; float in (0,1) = fraction of editor height
+---@field pos_x number|"center" integer = columns from left; float = fraction of editor width; "center" = centered on x
+---@field pos_y number|"center" integer = rows from top; float = fraction of editor height; "center" = centered on y
+---@field close_binding string Normal-mode key that closes the terminal window
+
+---@class flix.Config
+---@field java string path or name of the java executable
+---@field jar string path to flix.jar, relative to the project root or absolute
+---@field root_markers string[] files used to detect the project root
+---@field terminal flix.TerminalOptions options for the floating terminal window
+---@field features table feature flags
+---@field lsp table options forwarded to `vim.lsp.config("flix", ...)`
+
 -- default configuration
 -- override any field via `require("flix").setup({ ... })`
+---@type flix.Config
 M.defaults = {
   java = "java",
   jar = "flix.jar",
   root_markers = { "flix.toml" },
+  terminal = {
+    window = "split",
+    width = 0.60,
+    height = 0.5,
+    pos_x = "center",
+    pos_y = "center",
+    close_binding = "q"
+  },
   features = {
     codelens = true,
     completion = false,
@@ -14,6 +39,7 @@ M.defaults = {
 }
 
 -- active configuration
+---@type flix.Config
 M.options = vim.deepcopy(M.defaults)
 
 --- merge user options over the defaults

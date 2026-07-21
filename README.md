@@ -68,6 +68,14 @@ require("flix").setup({
   java = "java",              -- executable used to launch the jar
   jar = "flix.jar",           -- relative paths resolve from the project root
   root_markers = { "flix.toml" },
+  terminal = {                -- how `flix_cmd` opens its terminal
+    window = "split",         -- "split" (default) or "float" (floating window)
+    width = 0.60,             -- float = fraction of editor, integer = columns
+    height = 0.5,             -- float = fraction of editor, integer = rows
+    pos_x = "center",         -- number or "center" (float = fraction of width)
+    pos_y = "center",         -- number or "center" (float = fraction of height)
+    close_binding = "q",      -- Normal-mode key that closes the floating window
+  },
   features = {
     codelens = true,          -- refresh code lenses while editing
     completion = false,       -- native autocompletion (see below)
@@ -77,6 +85,14 @@ require("flix").setup({
   },
 })
 ```
+
+### Floating terminal
+
+By default `flix_cmd` opens in a `belowright split`. Set `terminal.window = "float"`
+to open it in a floating window instead. The remaining `terminal` fields only
+apply to the float: `width`/`height` accept a fraction of the editor size (e.g.
+`0.5`) or an integer column/row count, `pos_x`/`pos_y` accept a number or
+`"center"`, and `close_binding` (default `q`) closes the window from Normal mode.
 
 ### Native completion (Neovim 0.11+)
 
